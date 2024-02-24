@@ -3,35 +3,35 @@ from typing import Optional
 
 import mlx.core as mx
 import mlx.nn as nn
-from utils import AmpToDB
-from windows import get_window
+from .utils import AmpToDB
+from .windows import get_window
 
 
 class STFT(nn.Module):
     def __init__(
         self,
         n_fft: int,
-        win_length: Optional[int],
-        hop_length: Optional[int],
+        win_length: Optional[int]=None,
+        hop_length: Optional[int]=None,
         window: str = "hann",
         return_log: bool = False,
         **kwargs,
     ) -> None:
         super().__init__()
 
-        # self.n_fft = 2 ** math.ceil(math.log2(n_fft))
-        assert (
-            n_fft >= win_length
-        ), f"n_fft ({n_fft}) must be greater than or equal to win_length ({win_length})"
-        assert (
-            win_length >= hop_length
-        ), f"win_length ({win_length}) must be greater than or equal to hop_length ({hop_length})"
-
         self.n_fft = n_fft
         self.win_length = n_fft if win_length is None else win_length
         self.hop_length = n_fft // 4 if hop_length is None else hop_length
 
-        self.pad = int(self.nfft // 2 + 1)
+        assert (
+            self.n_fft >= self.win_length
+        ), f"n_fft ({self.n_fft}) must be greater than or equal to win_length ({self.win_length})"
+
+        assert (
+            self.win_length >= self.hop_length
+        ), f"win_length ({self.win_length}) must be greater than or equal to hop_length ({self.hop_length})"
+
+        self.pad = max(0, int(self.n_fft // 2) + 1 - self.win_length)
         self._window = get_window(window, length=self.win_length)
         self._window = mx.pad()
 
