@@ -11,19 +11,19 @@ setuptools.setup(
     description="An implementation of STFT and Inverse STFT in mlx",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    license='MIT',
+    license="MIT",
     url="https://github.com/nuniz/mlx_stft",
-    packages=setuptools.find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*", "tests.*"]),
+    packages=setuptools.find_packages(
+        exclude=["tests", "*.tests", "*.tests.*", "tests.*", "tests.*"]
+    ),
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
-        'License :: OSI Approved :: MIT License',
+        "License :: OSI Approved :: MIT License",
         "Operating System :: MacOS",
     ],
     python_requires=">=3.6",
-    install_requires=[
-        "mlx"
-    ],
+    install_requires=["mlx"],
     extras_require={
         "dev": ["scipy", "numpy"],
     },

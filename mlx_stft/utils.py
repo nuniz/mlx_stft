@@ -1,8 +1,9 @@
 import mlx.core as mx
 import mlx.nn as nn
 
+
 class AmpToDB(nn.Module):
-    def __init__(self, eps: float = 1e-5, top_db: float = 80.0):
+    def __init__(self, eps: float = 1e-5, top_db: float = 80.0) -> None:
         """
         Initializes the AmpToDB module.
 

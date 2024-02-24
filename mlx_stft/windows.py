@@ -12,16 +12,18 @@ def get_window(window, length, **kwargs) -> mx.array:
     Returns:
         mx.array: Window of specified type.
     """
-    if window == 'rectangular':
+    if window == "rectangular":
         return rect_window(length, **kwargs)
-    elif window == 'hann':
+    elif window == "hann":
         return hann_window(length, **kwargs)
-    elif window == 'gaussian':
+    elif window == "gaussian":
         return gaussian_window(length, **kwargs)
-    elif window == 'blackman':
+    elif window == "blackman":
         return blackman_window(length, **kwargs)
     else:
-        raise ValueError("Unsupported window type. Supported types are 'rectangular', 'hann', 'gaussian', 'blackman'.")
+        raise ValueError(
+            "Unsupported window type. Supported types are 'rectangular', 'hann', 'gaussian', 'blackman'."
+        )
 
 
 def hann_window(length: int) -> mx.array:
@@ -48,7 +50,7 @@ def rect_window(length: int) -> mx.array:
     return mx.ones(length)
 
 
-def gaussian_window(length: int, sigma: float=1) -> mx.array:
+def gaussian_window(length: int, sigma: float = 1) -> mx.array:
     """Generate a Gaussian window.
 
     Args:
@@ -75,4 +77,8 @@ def blackman_window(length: int) -> mx.array:
     a1 = 0.5
     a2 = 0.08
     n = mx.arange(length)
-    return a0 - a1 * mx.cos(2 * mx.pi * n / (length - 1)) + a2 * mx.cos(4 * mx.pi * n / (length - 1))
+    return (
+        a0
+        - a1 * mx.cos(2 * mx.pi * n / (length - 1))
+        + a2 * mx.cos(4 * mx.pi * n / (length - 1))
+    )
