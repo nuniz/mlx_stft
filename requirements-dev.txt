@@ -1,0 +1,3 @@
+mlx
+scipy
+numpy
