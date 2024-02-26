@@ -40,15 +40,15 @@ def pad_signal(x: mx.array, target_length) -> mx.array:
     """
     current_length = x.shape[-1]
     if current_length == target_length:
-        return x
+        pass
     elif current_length > target_length:
         raise ValueError(
             "Target length should be greater than the current length of the signal."
         )
     else:
         padding = mx.zeros(*x.shape[:-1], target_length - current_length)
-        return mx.cat((x, padding), dim=-1)
-
+        x = mx.concatenate((x, padding))
+    return x
 
 def precompute_fourier_basis(window_size: int, n_fft: int) -> mx.array:
     basis_grid = mx.outer(mx.arange(n_fft // 2 + 1), mx.arange(window_size))
