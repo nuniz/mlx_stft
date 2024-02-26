@@ -59,7 +59,7 @@ def precompute_fourier_basis(window_size: int, n_fft: int) -> mx.array:
 
 
 class AmpToDB(nn.Module):
-    def __init__(self, eps: float = 1e-5, top_db: float = 80.0) -> None:
+    def __init__(self, eps: float = 1e-5, top_db: float = 80.0, dim:int =0) -> None:
         """
         Initializes the AmpToDB module.
 
@@ -70,6 +70,7 @@ class AmpToDB(nn.Module):
         super().__init__()
         self.eps = eps
         self.top_db = top_db
+        self.dim=dim
 
     def __call__(self, x: mx.array) -> mx.array:
         """
@@ -81,6 +82,7 @@ class AmpToDB(nn.Module):
         Returns:
             mx.array -- Output tensor in dB scale.
         """
-        x_db = 20 * mx.log10(x.abs() + self.eps)
-        max_vals = x_db.max(-1).values
-        return mx.max(x_db, (max_vals - self.top_db).unsqueeze(-1))
+        x = 20 * mx.log10(norm(x, self.dim) + self.eps)
+        max_vals = x.max(-1) - self.top_db
+        x = mx.maximum(x, max_vals.reshape(*max_vals.shape, 1))
+        return x
