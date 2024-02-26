@@ -58,6 +58,11 @@ def precompute_fourier_basis(window_size: int, n_fft: int) -> mx.array:
     return basis
 
 
+def norm(x, dim):
+    x = mx.sqrt(mx.sum(x ** 2), dim)
+    return x
+
+
 class AmpToDB(nn.Module):
     def __init__(self, eps: float = 1e-5, top_db: float = 80.0, dim:int =0) -> None:
         """
