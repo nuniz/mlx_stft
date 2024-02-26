@@ -54,7 +54,7 @@ def precompute_fourier_basis(window_size: int, n_fft: int) -> mx.array:
     basis_grid = mx.outer(mx.arange(n_fft // 2 + 1), mx.arange(window_size))
     basis_real = mx.cos(2 * mx.pi * basis_grid / window_size)
     basis_imag = mx.sin(2 * mx.pi * basis_grid / window_size)
-    basis = mx.stack((basis_real, basis_imag), dim=0)
+    basis = mx.stack((basis_real, basis_imag), axis=0)
     return basis
 
 
