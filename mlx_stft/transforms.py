@@ -16,7 +16,7 @@ class STFT(nn.Module):
         hop_length: Optional[int] = None,
         window: str = "hann",
         onesided: bool = False,
-        return_logscale: bool = False,
+        return_db: bool = False,
         **kwargs,
     ) -> None:
         super().__init__()
@@ -34,37 +34,28 @@ class STFT(nn.Module):
         ), f"win_length ({self.win_length}) must be greater than or equal to hop_length ({self.hop_length})"
 
         self.onesided = onesided
-        self.return_logscale = return_logscale
+        self.return_db = return_db
         self.window = window
-        self.stft_sequential = nn.Identity()
+        self.fourier_conv = nn.Identity()
+        self.compression = nn.Identity()
         self.initialize(**kwargs)
 
-    def initialize(self, **kwargs):
+    def initialize(self, **kwargs) -> None:
+        _window = get_window(window=self.window, length=self.win_length)
+        _window = pad_signal(_window, target_length=self.n_fft)
         _fourier_basis = precompute_fourier_basis(
             window_size=self.n_fft,
             n_fft=self.n_fft // 2 if self.onesided else self.n_fft,
         )
-        _window = get_window(window=self.window, length=self.win_length)
-        _window = pad_signal(_window, target_length=self.n_fft)
+        _fourier_basis *= _window
+        _fourier_basis = _fourier_basis.reshape(-1, _fourier_basis.shape[-1], 1)
 
-        fourier_conv = nn.Conv1d(
-            in_channels=1,
-            out_channels=_fourier_basis.shape[0],
-            kernel_size=self.window_size,
-            stride=self.hop_size,
-            bias=False,
-        )
-        fourier_conv.weight = _fourier_basis
-        fourier_conv.freeze()
-
-        compression = nn.Identity() if self.return_logscale else AmpToDB(**kwargs)
-
-        self.stft_sequential = nn.Sequential(fourier_conv, compression)
+        self.fourier_conv = FrozenConv1dLayer(weight=_fourier_basis, stride=self.hop_length, padding=self.n_fft//2)
+        self.compression = nn.Identity() if not self.return_db else AmpToDB(dim=1, **kwargs)
 
     def __call__(self, x: mx.array) -> mx.array:
-        pad_input = self.n_fft // 2
-
-        x = mx.pad(x, pad_with)
-        x = self._fourier_conv(x)
+        x = x.reshape(*x.shape, -1)
+        x = self.fourier_conv(x)
+        x = x.reshape(x.shape[0], 2, -1 ,x.shape[-1])
         x = self.compression(x)
         return x
