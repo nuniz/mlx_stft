@@ -1,6 +1,7 @@
 # Short-Time Fourier Transform (STFT)
 
 This module implements the Short-Time Fourier Transform (STFT) in Python using MLX.
+It is designed to inherit from the nn.Module class, which allows it to be used either as a standalone module or as part of a larger neural network architecture.
 
 ## Features
 
