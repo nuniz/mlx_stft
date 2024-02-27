@@ -1,4 +1,3 @@
-import math
 from typing import Optional
 
 import mlx.core as mx
@@ -22,8 +21,8 @@ class STFT(nn.Module):
         super().__init__()
 
         self.n_fft = n_fft
-        self.win_length = n_fft if win_length is None else win_length
-        self.hop_length = n_fft // 4 if hop_length is None else hop_length
+        self.win_length = self.n_fft if win_length is None else win_length
+        self.hop_length = self.win_length // 4 if hop_length is None else hop_length
 
         assert (
             self.n_fft >= self.win_length
@@ -55,7 +54,7 @@ class STFT(nn.Module):
 
     def __call__(self, x: mx.array) -> mx.array:
         x = x.reshape(*x.shape, -1)
-        x = self.fourier_conv(x)
+        x = self.fourier_conv(x).swapaxes(-1, -2)
         x = x.reshape(x.shape[0], 2, -1 ,x.shape[-1])
         x = self.compression(x)
         return x

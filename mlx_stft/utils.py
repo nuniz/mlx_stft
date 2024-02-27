@@ -51,20 +51,19 @@ def pad_signal(x: mx.array, target_length) -> mx.array:
     return x
 
 def precompute_fourier_basis(window_size: int, n_fft: int) -> mx.array:
-    basis_grid = mx.outer(mx.arange(n_fft // 2 + 1), mx.arange(window_size))
-    basis_real = mx.cos(2 * mx.pi * basis_grid / window_size)
-    basis_imag = mx.sin(2 * mx.pi * basis_grid / window_size)
-    basis = mx.stack((basis_real, basis_imag), axis=0)
+    basis_grid = mx.outer(mx.arange(n_fft + 1), mx.arange(window_size))
+    basis_grid = 2 * mx.pi * basis_grid / window_size
+    basis = mx.stack((mx.cos(basis_grid), mx.sin(basis_grid)), axis=0)
     return basis
 
 
-def norm(x, dim):
+def norm(x, dim:int=-1):
     x = mx.sqrt(mx.sum(x ** 2), dim)
     return x
 
 
 class AmpToDB(nn.Module):
-    def __init__(self, eps: float = 1e-5, top_db: float = 80.0, dim:int =0) -> None:
+    def __init__(self, eps: float = 1e-5, top_db: float = 80.0, dim:int =-1) -> None:
         """
         Initializes the AmpToDB module.
 
