@@ -23,7 +23,7 @@ class TestSTFT(unittest.TestCase):
         )
 
         # Apply STFT to signal
-        x = mx.random.normal(batch, signal_length)
+        x = mx.random.normal(shape=(batch, signal_length))
         y = stft(x)
         self.assertIsNotNone(y)
 
@@ -42,7 +42,7 @@ class TestSTFT(unittest.TestCase):
         )
 
         # Apply STFT to signal
-        x = mx.random.normal(batch, signal_length)
+        x = mx.random.normal(shape=(batch, signal_length))
         y = stft(x)
         self.assertIsNotNone(y)
 
@@ -61,7 +61,7 @@ class TestSTFT(unittest.TestCase):
         )
 
         # Apply STFT to signal
-        x = mx.random.normal(batch, signal_length)
+        x = mx.random.normal(shape=(batch, signal_length))
         y = stft(x)
         self.assertIsNotNone(y)
 
