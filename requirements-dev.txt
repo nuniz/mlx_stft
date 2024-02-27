@@ -1,3 +1,4 @@
 mlx
-scipy
+soundfile
 numpy
+matplotlib

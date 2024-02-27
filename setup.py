@@ -25,6 +25,6 @@ setuptools.setup(
     python_requires=">=3.6",
     install_requires=["mlx"],
     extras_require={
-        "dev": ["scipy", "numpy"],
+        "dev": ["matplotlib", "numpy", "soundfile"],
     },
 )
