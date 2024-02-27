@@ -9,18 +9,14 @@ This module implements the Short-Time Fourier Transform (STFT) in Python using M
 - Option to return the result in decibels (dB).
 
 ## Installation
-
-To use this module, ensure you have MLX installed. 
+Install mlx_stft. 
 ```bash
-pip install mlx
-```
-
-Install mlx_stft package. 
-```bash
+git clone https://github.com/nuniz/mlx_stft.git
+cd mlx_stft
 python setup.py install
 ```
 
-Then, simply import the `STFT` class from the module.
+Then, import the `STFT` class from the module.
 ```python
 from mlx_stft import STFT
 ```
