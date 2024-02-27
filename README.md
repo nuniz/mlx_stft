@@ -10,10 +10,19 @@ This module implements the Short-Time Fourier Transform (STFT) in Python using M
 
 ## Installation
 
-To use this module, ensure you have MLX installed. Then, simply import the `STFT` class from the provided module.
+To use this module, ensure you have MLX installed. 
+```bash
+pip install mlx
+```
 
+Install mlx_stft package. 
 ```bash
 python setup.py install
+```
+
+Then, simply import the `STFT` class from the module.
+```python
+from mlx_stft import STFT
 ```
 
 ## STFT Arguments
