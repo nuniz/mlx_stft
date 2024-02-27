@@ -1,4 +1,5 @@
 import unittest
+
 from mlx_stft import STFT
 
 
@@ -17,7 +18,9 @@ class TestSTFT(unittest.TestCase):
         """
 
         # Create STFT instance
-        stft = STFT(n_fft=1024, win_length=512, hop_length=256, onesided=True, return_db=False)
+        stft = STFT(
+            n_fft=1024, win_length=512, hop_length=256, onesided=True, return_db=False
+        )
 
         # Apply STFT to signal
         x = mx.random.normal(batch, signal_length)
@@ -34,7 +37,9 @@ class TestSTFT(unittest.TestCase):
         """
 
         # Create STFT instance
-        stft = STFT(n_fft=1024, win_length=512, hop_length=256, onesided=False, return_db=False)
+        stft = STFT(
+            n_fft=1024, win_length=512, hop_length=256, onesided=False, return_db=False
+        )
 
         # Apply STFT to signal
         x = mx.random.normal(batch, signal_length)
@@ -51,7 +56,9 @@ class TestSTFT(unittest.TestCase):
         """
 
         # Create STFT instance
-        stft = STFT(n_fft=1024, win_length=512, hop_length=256, onesided=True, return_db=True)
+        stft = STFT(
+            n_fft=1024, win_length=512, hop_length=256, onesided=True, return_db=True
+        )
 
         # Apply STFT to signal
         x = mx.random.normal(batch, signal_length)

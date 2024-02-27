@@ -11,6 +11,7 @@ class FrozenConv1dLayer(nn.Module):
         stride (int): The stride of the convolution operation. Defaults to 1.
         padding (int): The padding to be applied. Defaults to 0.
     """
+
     def __init__(
         self,
         weight: mx.array,
@@ -73,6 +74,7 @@ def pad_signal(x: mx.array, target_length) -> mx.array:
         x = mx.concatenate((x, padding))
     return x
 
+
 def precompute_fourier_basis(window_size: int, n_fft: int) -> mx.array:
     """
     Precompute the Fourier basis.
@@ -90,7 +92,7 @@ def precompute_fourier_basis(window_size: int, n_fft: int) -> mx.array:
     return basis
 
 
-def norm(x, dim:int=-1):
+def norm(x, dim: int = -1):
     """
     Compute the L2 norm along a specified dimension.
 
@@ -101,12 +103,12 @@ def norm(x, dim:int=-1):
     Returns:
         mx.array: L2 norm along the specified dimension.
     """
-    x = mx.sqrt(mx.sum(x ** 2), dim)
+    x = mx.sqrt(mx.sum(x**2), dim)
     return x
 
 
 class AmpToDB(nn.Module):
-    def __init__(self, eps: float = 1e-5, top_db: float = 80.0, dim:int =-1) -> None:
+    def __init__(self, eps: float = 1e-5, top_db: float = 80.0, dim: int = -1) -> None:
         """
         Module to convert linear magnitude to decibel (dB) scale.
 
@@ -118,7 +120,7 @@ class AmpToDB(nn.Module):
         super().__init__()
         self.eps = eps
         self.top_db = top_db
-        self.dim=dim
+        self.dim = dim
 
     def __call__(self, x: mx.array) -> mx.array:
         """

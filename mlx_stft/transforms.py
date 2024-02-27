@@ -30,6 +30,7 @@ class STFT(nn.Module):
         fourier_conv (nn.Module): Convolutional layer for computing the STFT.
         compression (nn.Module): Compression layer, if return_db is True.
     """
+
     def __init__(
         self,
         n_fft: int,
@@ -76,9 +77,13 @@ class STFT(nn.Module):
         )
         _fourier_basis *= _window
         _fourier_basis = _fourier_basis.reshape(-1, _fourier_basis.shape[-1], 1)
-        self.fourier_conv = FrozenConv1dLayer(weight=_fourier_basis, stride=self.hop_length, padding=self.n_fft//2)
+        self.fourier_conv = FrozenConv1dLayer(
+            weight=_fourier_basis, stride=self.hop_length, padding=self.n_fft // 2
+        )
 
-        self.compression = nn.Identity() if not self.return_db else AmpToDB(dim=1, **kwargs)
+        self.compression = (
+            nn.Identity() if not self.return_db else AmpToDB(dim=1, **kwargs)
+        )
 
     def __call__(self, x: mx.array) -> mx.array:
         """
@@ -92,6 +97,6 @@ class STFT(nn.Module):
         """
         x = x.reshape(*x.shape, -1)
         x = self.fourier_conv(x).swapaxes(-1, -2)
-        x = x.reshape(x.shape[0], 2, -1 ,x.shape[-1])
+        x = x.reshape(x.shape[0], 2, -1, x.shape[-1])
         x = self.compression(x)
         return x
