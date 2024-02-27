@@ -40,3 +40,15 @@ stft = STFT(n_fft=1024, win_length=256, hop_length=128, return_db=True, onesided
 # Compute STFT of an audio signal
 audio_stft = stft(audio_signal)
 ```
+
+## Example
+
+The STFT is illustrated in the picture below using the NOIZEUS dataset's sp09.wav file.
+
+### One-Sided STFT
+<br/>
+![RT60](supplementary_material/one-sided.jpg)
+
+### Dual-Sided STFT
+<br/>
+![RT60](supplementary_material/dual-sided.jpg)
