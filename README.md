@@ -7,8 +7,8 @@ It is designed to inherit from the nn.Module class, which allows it to be used e
 ## Features
 
 - Compute STFT of audio signals.
-- Customizable window functions (e.g., Hann, Hamming).
-- Option to return the result in decibels (dB).
+- Option to return the result in decibels (dB) with top_db and epsilon.
+- Customizable window functions.
 
 ## Installation
 Install mlx_stft. 
