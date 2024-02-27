@@ -42,8 +42,8 @@ y = stft(x)
 ```
 ```
 x: mx.array [batch, length]
-y: mx.array [batch, n_fft, size of fold]
-where size of fold = length / hop_length
+y: mx.array [batch, n_fft // 2, size of fold] if one_sided else [batch, n_fft, size of fold]
+where size of fold = 1 + length // hop_length
 ```
 
 ## Example

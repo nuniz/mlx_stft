@@ -90,10 +90,13 @@ class STFT(nn.Module):
         Perform the STFT computation on the input.
 
         Args:
-            x (mx.array): Input signal.
+            x (mx.array): Input signal [batch, length].
 
         Returns:
             mx.array: STFT of the input signal.
+            * if not one_sided: [batch, n_fft, size of fold]
+            * else: [batch, n_fft // 2, size of fold]
+            where size of fold = 1 + length // hop_length 
         """
         x = x.reshape(*x.shape, -1)
         x = self.fourier_conv(x).swapaxes(-1, -2)
