@@ -43,12 +43,14 @@ audio_stft = stft(audio_signal)
 
 ## Example
 
-The STFT is illustrated in the picture below using the NOIZEUS dataset's sp09.wav file.
+The STFT is illustrated in the picture below using the [NOIZEUS](https://ecs.utdallas.edu/loizou/speech/noizeus/) dataset's sp09.wav file.
 
 ### One-Sided STFT
+
 <br/>
-![RT60](supplementary_material/one-sided.jpg)
+![stft](supplementary_material/one-sided.jpg)
 
 ### Dual-Sided STFT
+
 <br/>
-![RT60](supplementary_material/dual-sided.jpg)
+![stft](supplementary_material/dual-sided.jpg)
