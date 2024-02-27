@@ -103,7 +103,7 @@ def norm(x, dim: int = -1):
     Returns:
         mx.array: L2 norm along the specified dimension.
     """
-    x = mx.sqrt(mx.sum(x**2), dim)
+    x = mx.sqrt(mx.sum(x**2, dim))
     return x
 
 
