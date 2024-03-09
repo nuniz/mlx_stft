@@ -18,11 +18,6 @@ cd mlx_stft
 python setup.py install
 ```
 
-Then, import the `STFT` class from the module.
-```python
-from mlx_stft import STFT
-```
-
 ## STFT Arguments
     n_fft: Number of Fourier transform points.
     win_length: Length of the STFT window.
@@ -33,6 +28,8 @@ from mlx_stft import STFT
 
 ## Usage
 ```python
+# Import the `STFT` class from the module.
+from mlx_stft import STFT
 
 # Create an instance of the STFT module
 stft = STFT(n_fft=1024, win_length=256, hop_length=128, return_db=True, onesided=True)
