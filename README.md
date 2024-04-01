@@ -2,7 +2,17 @@
 
 This module implements the Short-Time Fourier Transform (STFT) in Python using MLX.
 
-It is designed to inherit from the nn.Module class, which allows it to be used either as a standalone module or as part of a larger neural network architecture.
+It is designed to inherit from the nn.Module class, which allows it to be used either as a standalone module or as part of a larger neural network architecture. 
+
+## Example
+
+The STFT is illustrated in the picture below using the [NOIZEUS](https://ecs.utdallas.edu/loizou/speech/noizeus/) dataset's sp09.wav file.
+
+### One-Sided STFT
+![one-sided stft](supplementary_material/one-sided.jpg)
+
+### Dual-Sided STFT
+![dual-sided stft](supplementary_material/dual-sided.jpg)
 
 ## Features
 
@@ -42,13 +52,3 @@ x: mx.array [batch, length]
 y: mx.array [batch, n_fft // 2, size of fold] if one_sided else [batch, n_fft, size of fold]
 where size of fold = 1 + length // hop_length
 ```
-
-## Example
-
-The STFT is illustrated in the picture below using the [NOIZEUS](https://ecs.utdallas.edu/loizou/speech/noizeus/) dataset's sp09.wav file.
-
-### One-Sided STFT
-![one-sided stft](supplementary_material/one-sided.jpg)
-
-### Dual-Sided STFT
-![dual-sided stft](supplementary_material/dual-sided.jpg)
