@@ -46,9 +46,3 @@ python setup.py install
     window: Type of window function to apply (default is "hann").
     onesided: Whether to return only the non-redundant part of the spectrum (default is False).
     return_db: Whether to return the result in decibels (default is False).
-
-## Features
-
-- Compute STFT of audio signals.
-- Option to return the result in decibels (dB) with top_db and epsilon.
-- Customizable window functions. 
