@@ -2,7 +2,24 @@
 
 This module implements the Short-Time Fourier Transform (STFT) in Python using MLX.
 
-It is designed to inherit from the nn.Module class, which allows it to be used either as a standalone module or as part of a larger neural network architecture. 
+It is designed to inherit from the nn.Module, which allows it to be used either as a standalone module or as part of a larger neural network architecture. 
+
+## Usage
+```python
+from mlx_stft import STFT
+
+# Create an instance of the STFT module
+stft = STFT(n_fft=1024, win_length=256, hop_length=128, return_db=True, onesided=True)
+
+# Compute STFT of an audio signal
+y = stft(x)
+```
+
+```
+x: mx.array [batch, length]
+y: mx.array [batch, n_fft // 2, size of fold] if one_sided else [batch, n_fft, size of fold]
+where size of fold = 1 + length // hop_length
+``` 
 
 ## Example
 
@@ -14,12 +31,6 @@ The STFT is illustrated in the picture below using the [NOIZEUS](https://ecs.utd
 ### Dual-Sided STFT
 ![dual-sided stft](supplementary_material/dual-sided.jpg)
 
-## Features
-
-- Compute STFT of audio signals.
-- Option to return the result in decibels (dB) with top_db and epsilon.
-- Customizable window functions.
-
 ## Installation
 Install mlx_stft. 
 ```bash
@@ -28,7 +39,7 @@ cd mlx_stft
 python setup.py install
 ```
 
-## STFT Arguments
+## Arguments
     n_fft: Number of Fourier transform points.
     win_length: Length of the STFT window.
     hop_length: Number of audio samples between adjacent STFT columns.
@@ -36,19 +47,8 @@ python setup.py install
     onesided: Whether to return only the non-redundant part of the spectrum (default is False).
     return_db: Whether to return the result in decibels (default is False).
 
-## Usage
-```python
-# Import the `STFT` class from the module.
-from mlx_stft import STFT
+## Features
 
-# Create an instance of the STFT module
-stft = STFT(n_fft=1024, win_length=256, hop_length=128, return_db=True, onesided=True)
-
-# Compute STFT of an audio signal
-y = stft(x)
-```
-```
-x: mx.array [batch, length]
-y: mx.array [batch, n_fft // 2, size of fold] if one_sided else [batch, n_fft, size of fold]
-where size of fold = 1 + length // hop_length
-```
+- Compute STFT of audio signals.
+- Option to return the result in decibels (dB) with top_db and epsilon.
+- Customizable window functions. 
