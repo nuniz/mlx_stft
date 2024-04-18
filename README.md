@@ -12,14 +12,6 @@ cd mlx_stft
 python setup.py install
 ```
 
-## Arguments
-    n_fft: Number of Fourier transform points.
-    win_length: Length of the STFT window.
-    hop_length: Number of audio samples between adjacent STFT columns.
-    window: Type of window function to apply (default is "hann").
-    onesided: Whether to return only the non-redundant part of the spectrum (default is False).
-    return_db: Whether to return the result in decibels (default is False).
-    
 ## Usage
 ```python
 from mlx_stft import STFT
@@ -36,6 +28,14 @@ x: mx.array [batch, length]
 y: mx.array [batch, n_fft // 2, size of fold] if one_sided else [batch, n_fft, size of fold]
 where size of fold = 1 + length // hop_length
 ``` 
+
+## Arguments
+    n_fft: Number of Fourier transform points.
+    win_length: Length of the STFT window.
+    hop_length: Number of audio samples between adjacent STFT columns.
+    window: Type of window function to apply (default is "hann").
+    onesided: Whether to return only the non-redundant part of the spectrum (default is False).
+    return_db: Whether to return the result in decibels (default is False).
 
 ## Example
 
