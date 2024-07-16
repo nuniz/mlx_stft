@@ -96,7 +96,7 @@ class STFT(nn.Module):
             mx.array: STFT of the input signal.
             * if not one_sided: [batch, n_fft, size of fold]
             * else: [batch, n_fft // 2, size of fold]
-            where size of fold = 1 + length // hop_length 
+            where size of fold = 1 + length // hop_length
         """
         x = x.reshape(*x.shape, -1)
         x = self.fourier_conv(x).swapaxes(-1, -2)
