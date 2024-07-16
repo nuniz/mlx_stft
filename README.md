@@ -5,7 +5,12 @@ This module implements the Short-Time Fourier Transform (STFT) in Python using M
 It is designed to inherit from the nn.Module, which allows it to be used either as a standalone module or as part of a larger neural network architecture. 
 
 ## Installation
-Install mlx_stft. 
+You can install mlx_stft directly from pypi:
+```bash
+pip install mlx_stft
+```
+
+Or you can install it directly from the source code:
 ```bash
 git clone https://github.com/nuniz/mlx_stft.git
 cd mlx_stft
