@@ -60,9 +60,6 @@ def blackman_window(length: int) -> mx.array:
     a0 = 0.42
     a1 = 0.5
     a2 = 0.08
-    n = mx.arange(length)
-    return (
-        a0
-        - a1 * mx.cos(2 * mx.pi * n / (length - 1))
-        + a2 * mx.cos(4 * mx.pi * n / (length - 1))
-    )
+    # Precompute normalized angle to avoid redundant division
+    theta = 2.0 * mx.pi * mx.arange(length) / (length - 1)
+    return a0 - a1 * mx.cos(theta) + a2 * mx.cos(2.0 * theta)
