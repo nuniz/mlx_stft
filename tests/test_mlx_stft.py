@@ -2,7 +2,7 @@ import unittest
 
 import mlx.core as mx
 
-from mlx_stft import STFT, ISTFT, CompiledISTFT
+from mlx_stft import STFT, ISTFT, CompiledSTFT, CompiledISTFT
 
 
 class TestSTFT(unittest.TestCase):
@@ -71,6 +71,36 @@ class TestSTFT(unittest.TestCase):
 
         error = mx.max(mx.abs(y_fft - y_conv)).item()
         self.assertLess(error, 1e-2, f"Backend difference: {error}")
+
+    def test_compiled_stft_consistency(self, batch: int = 2, signal_length: int = 8000):
+        """
+        Test that CompiledSTFT matches STFT output.
+        """
+        n_fft = 1024
+        hop_length = 256
+
+        x = mx.random.normal(shape=(batch, signal_length))
+
+        # Create both regular and compiled STFT (using FFT backend)
+        stft = STFT(
+            n_fft=n_fft,
+            hop_length=hop_length,
+            onesided=True,
+            use_fft=True,
+        )
+        compiled_stft = CompiledSTFT(
+            n_fft=n_fft,
+            hop_length=hop_length,
+            onesided=True,
+            use_fft=True,
+        )
+
+        y = stft(x)
+        y_compiled = compiled_stft(x)
+
+        # Check that compiled version matches regular version
+        error = mx.max(mx.abs(y - y_compiled)).item()
+        self.assertLess(error, 1e-6, f"Compiled vs regular mismatch: {error}")
 
     def test_db(self, batch: int = 2, signal_length: int = 8000):
         """
