@@ -2,3 +2,4 @@ mlx
 soundfile
 numpy
 matplotlib
+pytest
