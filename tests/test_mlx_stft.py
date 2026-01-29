@@ -56,7 +56,7 @@ class TestSTFT(unittest.TestCase):
         x = mx.random.normal(shape=(batch, signal_length))
         y = stft(x)
         self.assertIsNotNone(y)
-        self.assertEqual(y.shape[2], 1025)  # n_fft + 1 for conv
+        self.assertEqual(y.shape[2], 1024)  # n_fft for dualsided
 
     def test_stft_backend_consistency(self, batch: int = 2, signal_length: int = 8000):
         """
@@ -262,6 +262,37 @@ class TestISTFT(unittest.TestCase):
         # Check reconstruction error
         error = mx.max(mx.abs(x - x_hat)).item()
         self.assertLess(error, 1e-4, f"Reconstruction error too high: {error}")
+
+    def test_perfect_reconstruction_dualsided_conv(
+        self, batch: int = 2, signal_length: int = 8000
+    ):
+        """
+        Test perfect reconstruction with dual-sided spectrum using Conv backend.
+        """
+        n_fft = 1024
+        hop_length = 256
+
+        stft = STFT(
+            n_fft=n_fft,
+            hop_length=hop_length,
+            onesided=False,
+            return_db=False,
+            use_fft=False,
+        )
+        istft = ISTFT(
+            n_fft=n_fft,
+            hop_length=hop_length,
+            onesided=False,
+            use_fft=False,
+        )
+
+        x = mx.random.normal(shape=(batch, signal_length))
+        X = stft(x)
+        x_hat = istft(X, length=signal_length)
+
+        # Conv backend has slightly lower precision
+        error = mx.max(mx.abs(x - x_hat)).item()
+        self.assertLess(error, 1e-3, f"Reconstruction error too high: {error}")
 
     def test_perfect_reconstruction_large_n_fft(
         self, batch: int = 2, signal_length: int = 16000

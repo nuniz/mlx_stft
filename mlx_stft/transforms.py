@@ -106,7 +106,7 @@ class STFT(nn.Module):
             # Conv mode: precompute Fourier basis with window applied
             _fourier_basis = precompute_fourier_basis(
                 window_size=self.n_fft,
-                n_fft=self.n_fft // 2 if self.onesided else self.n_fft,
+                n_fft=self.n_fft // 2 if self.onesided else self.n_fft - 1,
             )
             _fourier_basis = _fourier_basis * _window
             _fourier_basis = _fourier_basis.reshape(-1, _fourier_basis.shape[-1], 1)

@@ -215,12 +215,6 @@ def run_roundtrip_benchmark(
     """Run STFT + iSTFT round-trip benchmark."""
     hop_length = n_fft // 4
 
-    # Note: Conv backend for dualsided has shape mismatch (STFT outputs n_fft+1 bins,
-    # iSTFT expects n_fft bins). For roundtrip, use same backend for both.
-    # When use_fft=False and onesided=False, we skip as it's incompatible.
-    if not use_fft and not onesided:
-        raise ValueError("Conv backend roundtrip not supported for dualsided spectrum (shape mismatch)")
-
     # Create transforms
     if compiled:
         stft = CompiledSTFT(
