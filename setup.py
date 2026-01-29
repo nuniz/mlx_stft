@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="mlx_stft",
-    version="0.1.1",
+    version="0.1.2",
     author="Asaf Zorea",
     author_email="zoreasaf@gmail.com",
     description="An implementation of STFT and Inverse STFT in mlx",
